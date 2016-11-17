@@ -1,4 +1,4 @@
-FROM elasticsearch 2.4.1
+FROM elasticsearch:2.4.1
 
 MAINTAINER Vemund Gaukstad
 
