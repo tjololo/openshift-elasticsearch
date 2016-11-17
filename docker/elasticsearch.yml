@@ -1,0 +1,12 @@
+cluster:
+  name: ${ELASTICSEARCH_CLUSTER_NAME}
+
+discovery:
+  zen:
+    ping:
+      multicast:
+        enabled: false
+
+path:
+  data: /elasticsearch/storage/${ELASTICSEARCH_CLUSTER_NAME}/data
+  work: /elasticsearch/${ELASTICSEARCH_CLUSTER_NAME}/work
