@@ -13,7 +13,3 @@ COPY elasticsearch.yml logging.yml /etc/elasticsearch/
 EXPOSE 9200
 EXPOSE 9300
 USER 1001
-
-ENTRYPOINT ["entrypoint.sh"]
-
-CMD ["/usr/share/elasticsearch/bin/elasticsearch"]
