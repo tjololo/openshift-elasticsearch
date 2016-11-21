@@ -14,6 +14,6 @@ COPY elasticsearch.yml logging.yml /etc/elasticsearch/
 EXPOSE 9200
 EXPOSE 9300
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/tmp/entrypoint/entrypoint.sh"]
 
 CMD ["/usr/share/elasticsearch/bin/elasticsearch"]
