@@ -4,7 +4,7 @@ if [ "${ELASTICSEARCH_LOG_LEVEL}" == 'DEBUG' ]; then
     set -x
 fi
 ES_HOME=/usr/share/elasticsearch
-DATA_DIR=/elasticsearch/storage/${ELASTICSEARCH_CLUSTER_NAME}/data
+DATA_DIR=/elasticsearch/persistent/${ELASTICSEARCH_CLUSTER_NAME}/data
 WORK_DIR=/elasticsearch/${ELASTICSEARCH_CLUSTER_NAME}/work
 CONF_DIR=/etc/elasticsearch
 

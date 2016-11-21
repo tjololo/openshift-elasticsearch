@@ -8,5 +8,5 @@ discovery:
         enabled: false
 
 path:
-  data: /elasticsearch/storage/${ELASTICSEARCH_CLUSTER_NAME}/data
+  data: /elasticsearch/persistent/${ELASTICSEARCH_CLUSTER_NAME}/data
   work: /elasticsearch/${ELASTICSEARCH_CLUSTER_NAME}/work
