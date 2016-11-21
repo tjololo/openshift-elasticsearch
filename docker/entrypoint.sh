@@ -26,7 +26,8 @@ if [[ "${ELASTICSEARCH_MAX_MEMORY}" =~ $regex ]]; then
 		echo "ELASTICSEARCH_MAX_MEMORY set to ${ELASTICSEARCH_MAX_MEMORY} but must be at least 512M"
 		exit 1
 	fi
-	export ES_JAVA_OPTS+=" --Xms=256M --Xmx=$(($num/2))m"
+	echo "Setting ES_HEAP_SIZE to: ${num}m"
+	export ES_HEAP_SIZE=${num}m
 else
 	echo "ELASTICSEARCH_MAX_MEMORY env var is invalid: ${ELASTICSEARCH_MAX_MEMORY}"
 	exit 1
@@ -34,5 +35,4 @@ fi
 
 set -eu
 cmd="$1"; shift
-echo "$cmd "$@" $JAVA_OPTS $ES_JAVA_OPTS"
 exec $cmd "$@" $JAVA_OPTS $ES_JAVA_OPTS
