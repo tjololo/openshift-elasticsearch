@@ -26,7 +26,7 @@ if [[ "${ELASTICSEARCH_MAX_MEMORY}" =~ $regex ]]; then
 		echo "ELASTICSEARCH_MAX_MEMORY set to ${ELASTICSEARCH_MAX_MEMORY} but must be at least 512M"
 		exit 1
 	fi
-	export ES_JAVA_OPTS+=" -Xms256M -Xmx$(($num/2))m"
+	export ES_JAVA_OPTS+=" --Xms256M --Xmx$(($num/2))m"
 else
 	echo "ELASTICSEARCH_MAX_MEMORY env var is invalid: ${ELASTICSEARCH_MAX_MEMORY}"
 	exit 1
