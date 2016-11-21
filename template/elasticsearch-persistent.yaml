@@ -126,6 +126,8 @@ objects:
     - type: ImageChange
       imageChangeParams:
         automatic: true
+        containerNames:
+        - elasticsearch
         from:
           kind: ImageStreamTag
           name: openshift-elasticsearch:latest

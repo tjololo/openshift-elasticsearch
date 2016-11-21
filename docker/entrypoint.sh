@@ -34,5 +34,5 @@ fi
 
 set -eu
 cmd="$1"; shift
-
+echo "$cmd "$@" $JAVA_OPTS $ES_JAVA_OPTS"
 exec $cmd "$@" $JAVA_OPTS $ES_JAVA_OPTS
