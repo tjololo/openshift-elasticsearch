@@ -141,7 +141,7 @@ items:
   - name: GIT_BRANCH
     description: "Branch of git repo"
     required: true
-    value: openshift-elasticsearch:latest
+    value: openshift-elasticsearch:2.4.1
 - kind: ImageStream
   apiVersion: v1
   metadata:
