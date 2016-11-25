@@ -1,6 +1,9 @@
 cluster:
   name: ${ELASTICSEARCH_CLUSTER_NAME}
 
+network:
+  host: _global_
+
 discovery:
   zen:
     ping:
