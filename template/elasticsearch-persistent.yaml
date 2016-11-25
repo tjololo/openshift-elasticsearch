@@ -165,4 +165,4 @@ items:
   - name: VERSION_TAG
     description: "Branch of git repo"
     required: true
-    value: 2
+    value: 2.4.1
