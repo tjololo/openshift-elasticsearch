@@ -115,7 +115,7 @@ items:
           from:
             kind: ImageStreamTag
             namespace: openshift
-            name: ${GIT_BRANCH}
+            name: ${IMAGE_STREAM_VERSION}
 
   parameters:
   - name: NAME
@@ -129,7 +129,7 @@ items:
   - name: ELASTICSEARCH_VOLUME_CAPACITY
     description: "Volume space available for data (format is [value][Mi|Gi])"
     required: true
-    displayName: 'Tamanho do Volume de dados [select:5Gi=5GB:10Gi=10GB:20Gi=20GB]'
+    displayName: 'Data volume size'
     value: 1Gi
   - name: ELASTICSEARCH_CLUSTER_NAME
     description: Elasticsearch cluster name
@@ -139,8 +139,8 @@ items:
     description: Elasticsearch log level
     required: true
     value: INFO
-  - name: GIT_BRANCH
-    description: "Branch of git repo"
+  - name: IMAGE_STREAM_VERSION
+    description: "Imagestream and version to use"
     required: true
     value: openshift-elasticsearch:2.4.1
 - kind: ImageStream
