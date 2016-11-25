@@ -13,7 +13,7 @@ items:
       type: Git
       git:
         uri: 'https://github.com/tjololo/openshift-elasticsearch.git'
-        ref: 2.4.1
+        ref: '2.4.1'
       contextDir: docker
     strategy:
       type: Docker
@@ -21,7 +21,6 @@ items:
       to:
         kind: ImageStreamTag
         name: 'openshift-elasticsearch:2.4.1'
-
 - kind: ImageStream
   apiVersion: v1
   namespace: openshift
@@ -55,7 +54,6 @@ items:
         targetPort: 9300
       selector:
         name: ${NAME}
-
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
