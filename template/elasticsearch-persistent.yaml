@@ -137,7 +137,6 @@ items:
           - elasticsearch
           from:
             kind: ImageStreamTag
-            namespace: openshift
             name: openshift-elasticsearch:${VERSION_TAG}
 
   parameters:

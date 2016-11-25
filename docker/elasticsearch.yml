@@ -4,6 +4,12 @@ cluster:
 network:
   host: 0.0.0.0
 
+discovery:
+  zen:
+    ping:
+      multicast:
+        enabled: false
+
 path:
   data: /elasticsearch/persistent/${ELASTICSEARCH_CLUSTER_NAME}/data
   work: /elasticsearch/${ELASTICSEARCH_CLUSTER_NAME}/work
