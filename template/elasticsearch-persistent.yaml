@@ -114,6 +114,7 @@ items:
           - elasticsearch
           from:
             kind: ImageStreamTag
+            namespace: openshift
             name: ${GIT_BRANCH}
 
   parameters:
