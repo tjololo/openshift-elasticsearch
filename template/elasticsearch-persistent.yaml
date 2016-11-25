@@ -20,6 +20,9 @@ objects:
     - name: elasticsearch
       port: 9200
       targetPort: 9200
+    - name: elasticsearch-cluster
+      port: 9300
+      targetPort: 9300
     selector:
       name: ${NAME}
 
