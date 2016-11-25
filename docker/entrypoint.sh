@@ -11,6 +11,7 @@ CONF_DIR=/etc/elasticsearch
 JAVA_OPTS=${JAVA_OPTS:-}
 ES_JAVA_OPTS="-Des.default.path.home=$ES_HOME -Des.default.path.data=$DATA_DIR -Des.default.path.work=$WORK_DIR -Des.default.path.conf=$CONF_DIR"
 id
+ls -la /etc
 mkdir -p /elasticsearch/persistent/$ELASTICSEARCH_CLUSTER_NAME/data
 mkdir -p /elasticsearch/$ELASTICSEARCH_CLUSTER_NAME/work
 
