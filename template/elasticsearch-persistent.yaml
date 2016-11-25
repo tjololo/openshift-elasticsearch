@@ -95,9 +95,9 @@ items:
               value: ${ELASTICSEARCH_CLUSTER_NAME}
             - name: ELASTICSEARCH_LOG_LEVEL
               value: ${ELASTICSEARCH_LOG_LEVEL}
-            image: elasticsearch
+            image: openshift-elasticsearch
             imagePullPolicy: IfNotPresent
-            name: elasticsearch
+            name: openshift-elasticsearch
             ports:
             - containerPort: 9200
               protocol: TCP
