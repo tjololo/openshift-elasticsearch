@@ -119,7 +119,7 @@ items:
 
   parameters:
   - name: NAME
-    description: Elasticsearch service name
+    description: "Elasticsearch service name"
     required: true
     value: elasticsearch
   - name: ELASTICSEARCH_MAX_MEMORY
@@ -132,13 +132,13 @@ items:
     displayName: 'Data volume size'
     value: 1Gi
   - name: ELASTICSEARCH_CLUSTER_NAME
-    description: Elasticsearch cluster name
+    description: "Elasticsearch cluster name"
     required: true
     value: default-cluster
   - name: ELASTICSEARCH_LOG_LEVEL
-    description: Elasticsearch log level
+    description: "Elasticsearch log level [DEBUG|INFO|WARN|ERROR]"
     required: true
-    value: INFO
+    value: ERROR
   - name: IMAGE_STREAM_VERSION
     description: "Imagestream and version to use"
     required: true
