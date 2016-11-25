@@ -182,7 +182,7 @@ items:
       type: Git
       git:
         uri: 'https://github.com/tjololo/openshift-elasticsearch.git'
-        ref: ${GIT_BRANCH}
+        ref: 2.4.1
       contextDir: docker
     strategy:
       type: Docker
