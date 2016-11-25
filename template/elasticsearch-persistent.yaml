@@ -41,30 +41,6 @@ items:
       resources:
         requests:
           storage: ${ELASTICSEARCH_VOLUME_CAPACITY}
-  - kind: ImageStream
-    apiVersion: v1
-    metadata:
-      name: openshift-elasticsearch
-      creationTimestamp: null
-  - kind: BuildConfig
-    apiVersion: v1
-    metadata:
-      name: openshift-elasticsearch
-      labels:
-        app: openshift-elasticsearch
-    spec:
-      source:
-        type: Git
-        git:
-          uri: 'https://github.com/tjololo/openshift-elasticsearch.git'
-          ref: ${GIT_BRANCH}
-        contextDir: docker
-      strategy:
-        type: Docker
-      output:
-        to:
-          kind: ImageStreamTag
-          name: 'openshift-elasticsearch:'${GIT_BRANCH}
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
@@ -138,7 +114,7 @@ items:
           - elasticsearch
           from:
             kind: ImageStreamTag
-            name: openshift-elasticsearch:latest
+            name: ${GIT_BRANCH}
 
   parameters:
   - name: NAME
@@ -165,7 +141,7 @@ items:
   - name: GIT_BRANCH
     description: "Branch of git repo"
     required: true
-    value: 2.4.1
+    value: openshift-elasticsearch:latest
 - kind: ImageStream
   apiVersion: v1
   metadata:
