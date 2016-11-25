@@ -64,7 +64,7 @@ items:
       output:
         to:
           kind: ImageStreamTag
-          name: 'openshift-elasticsearch:latest'
+          name: 'openshift-elasticsearch:'${GIT_BRANCH}
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
@@ -189,4 +189,4 @@ items:
     output:
       to:
         kind: ImageStreamTag
-        name: 'openshift-elasticsearch:latest'
+        name: 'openshift-elasticsearch:2.4.1'
