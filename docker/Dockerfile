@@ -3,7 +3,7 @@ FROM elasticsearch:2.4.1
 MAINTAINER Vemund Gaukstad
 
 ENV TZ=Europ/Oslo
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && groupadd -r elasticsearch && useradd -r -g elasticsearch elasticsearch
 
 USER elasticsearch
 ENV PATH=$PATH:/usr/share
