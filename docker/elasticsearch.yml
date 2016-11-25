@@ -2,7 +2,7 @@ cluster:
   name: ${ELASTICSEARCH_CLUSTER_NAME}
 
 network:
-  host: _global_
+  host: 0.0.0.0
 
 discovery:
   zen:
