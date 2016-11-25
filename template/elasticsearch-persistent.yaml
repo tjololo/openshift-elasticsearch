@@ -1,32 +1,10 @@
 apiVersion: v1
 kind: List
+labels:
+  template: elasticsearch-persistent
 items:
-- kind: ImageStream
-  apiVersion: v1
-  metadata:
-    name: openshift-elasticsearch
-    creationTimestamp: null
-- kind: BuildConfig
-  apiVersion: v1
-  metadata:
-    name: openshift-elasticsearch
-    labels:
-      app: openshift-elasticsearch
-  spec:
-    source:
-      type: Git
-      git:
-        uri: 'https://github.com/tjololo/openshift-elasticsearch.git'
-        ref: '2.4.1'
-      contextDir: docker
-    strategy:
-      type: Docker
-    output:
-      to:
-        kind: ImageStreamTag
-        name: 'openshift-elasticsearch:2.4.1'
-- kind: Template
-  apiVersion: v1
+- apiVersion: v1
+  kind: Template
   labels:
     template: elasticsearch-persistent
   metadata:
@@ -52,6 +30,7 @@ items:
         targetPort: 9300
       selector:
         name: ${NAME}
+
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
@@ -62,6 +41,30 @@ items:
       resources:
         requests:
           storage: ${ELASTICSEARCH_VOLUME_CAPACITY}
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: openshift-elasticsearch
+      creationTimestamp: null
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      name: openshift-elasticsearch
+      labels:
+        app: openshift-elasticsearch
+    spec:
+      source:
+        type: Git
+        git:
+          uri: 'https://github.com/tjololo/openshift-elasticsearch.git'
+          ref: ${GIT_BRANCH}
+        contextDir: docker
+      strategy:
+        type: Docker
+      output:
+        to:
+          kind: ImageStreamTag
+          name: 'openshift-elasticsearch:latest'
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
@@ -95,9 +98,9 @@ items:
               value: ${ELASTICSEARCH_CLUSTER_NAME}
             - name: ELASTICSEARCH_LOG_LEVEL
               value: ${ELASTICSEARCH_LOG_LEVEL}
-            image: openshift-elasticsearch
+            image: elasticsearch
             imagePullPolicy: IfNotPresent
-            name: openshift-elasticsearch
+            name: elasticsearch
             ports:
             - containerPort: 9200
               protocol: TCP
@@ -135,7 +138,7 @@ items:
           - elasticsearch
           from:
             kind: ImageStreamTag
-            name: openshift-elasticsearch:${VERSION_TAG}
+            name: openshift-elasticsearch:latest
 
   parameters:
   - name: NAME
@@ -159,7 +162,31 @@ items:
     description: Elasticsearch log level
     required: true
     value: INFO
-  - name: VERSION_TAG
+  - name: GIT_BRANCH
     description: "Branch of git repo"
     required: true
     value: 2.4.1
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: openshift-elasticsearch
+    creationTimestamp: null
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: openshift-elasticsearch
+    labels:
+      app: openshift-elasticsearch
+  spec:
+    source:
+      type: Git
+      git:
+        uri: 'https://github.com/tjololo/openshift-elasticsearch.git'
+        ref: ${GIT_BRANCH}
+      contextDir: docker
+    strategy:
+      type: Docker
+    output:
+      to:
+        kind: ImageStreamTag
+        name: 'openshift-elasticsearch:latest'
