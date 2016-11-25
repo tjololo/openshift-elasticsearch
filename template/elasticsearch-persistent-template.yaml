@@ -1,0 +1,163 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: elasticsearch-persistent
+metadata:
+  name: elasticsearch-persistent
+  annotations:
+    description: Simple template for elasticsearch.
+    iconClass: icon-elasticsearch
+    tags: elasticsearch,peristent,database,search
+objects:
+- kind: Service
+  apiVersion: v1
+  metadata:
+    annotations:
+      description: Exposes the elasticsearch server
+    name: ${NAME}
+  spec:
+    ports:
+    - name: elasticsearch
+      port: 9200
+      targetPort: 9200
+    - name: elasticsearch-cluster
+      port: 9300
+      targetPort: 9300
+    selector:
+      name: ${NAME}
+
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: ${NAME}
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: ${ELASTICSEARCH_VOLUME_CAPACITY}
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: openshift-elasticsearch
+    creationTimestamp: null
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: openshift-elasticsearch
+    labels:
+      app: openshift-elasticsearch
+  spec:
+    source:
+      type: Git
+      git:
+        uri: 'https://github.com/tjololo/openshift-elasticsearch.git'
+        ref: ${GIT_BRANCH}
+      contextDir: docker
+    strategy:
+      type: Docker
+    output:
+      to:
+        kind: ImageStreamTag
+        name: 'openshift-elasticsearch:latest'
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    creationTimestamp: null
+    name: ${NAME}
+    annotations:
+      iconClass: icon-elasticsearch
+  spec:
+    replicas: 1
+    selector:
+      name: ${NAME}
+    strategy:
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          name: ${NAME}
+      spec:
+        containers:
+        - capabilities: {}
+          env:
+          - name: ELASTICSEARCH_SERVICE_NAME
+            value: ${NAME}
+          - name: ELASTICSEARCH_MAX_MEMORY
+            value: ${ELASTICSEARCH_MAX_MEMORY}
+          - name: ELASTICSEARCH_VOLUME_CAPACITY
+            value: ${ELASTICSEARCH_VOLUME_CAPACITY}
+          - name: ELASTICSEARCH_CLUSTER_NAME
+            value: ${ELASTICSEARCH_CLUSTER_NAME}
+          - name: ELASTICSEARCH_LOG_LEVEL
+            value: ${ELASTICSEARCH_LOG_LEVEL}
+          image: elasticsearch
+          imagePullPolicy: IfNotPresent
+          name: elasticsearch
+          ports:
+          - containerPort: 9200
+            protocol: TCP
+          resources: {}
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          volumeMounts:
+          - mountPath: /elasticsearch
+            name: ${NAME}-work
+          - mountPath: /elasticsearch/persistent
+            name: ${NAME}-data
+          resources:
+            limits:
+              cpu: 293m
+              memory: 1024M
+            requests:
+              cpu: 146m
+              memory: 512M
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        volumes:
+        - name: ${NAME}-data
+          persistentVolumeClaim:
+            claimName: ${NAME}
+        - emptyDir: {}
+          name: ${NAME}-work
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - elasticsearch
+        from:
+          kind: ImageStreamTag
+          name: openshift-elasticsearch:latest
+
+parameters:
+- name: NAME
+  description: Elasticsearch service name
+  required: true
+  value: elasticsearch
+- name: ELASTICSEARCH_MAX_MEMORY
+  description: "Max memory Elasticsearch will use (format is [value][M|G])"
+  required: true
+  value: 1G
+- name: ELASTICSEARCH_VOLUME_CAPACITY
+  description: "Volume space available for data (format is [value][Mi|Gi])"
+  required: true
+  displayName: 'Tamanho do Volume de dados [select:5Gi=5GB:10Gi=10GB:20Gi=20GB]'
+  value: 1Gi
+- name: ELASTICSEARCH_CLUSTER_NAME
+  description: Elasticsearch cluster name
+  required: true
+  value: default-cluster
+- name: ELASTICSEARCH_LOG_LEVEL
+  description: Elasticsearch log level
+  required: true
+  value: INFO
+- name: GIT_BRANCH
+  description: "Branch of git repo"
+  required: true
+  value: 2.4.1
