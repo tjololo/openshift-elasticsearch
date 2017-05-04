@@ -114,7 +114,7 @@ items:
           - elasticsearch
           from:
             kind: ImageStreamTag
-            namespace: openshift
+            namespace: ${IMAGE_STREAM_NAMESPACE}
             name: ${IMAGE_STREAM_VERSION}
 
   parameters:
@@ -143,27 +143,7 @@ items:
     description: "Imagestream and version to use"
     required: true
     value: openshift-elasticsearch:2.4.1
-- kind: ImageStream
-  apiVersion: v1
-  metadata:
-    name: openshift-elasticsearch
-    creationTimestamp: null
-- kind: BuildConfig
-  apiVersion: v1
-  metadata:
-    name: openshift-elasticsearch
-    labels:
-      app: openshift-elasticsearch
-  spec:
-    source:
-      type: Git
-      git:
-        uri: 'https://github.com/tjololo/openshift-elasticsearch.git'
-        ref: 2.4.1
-      contextDir: docker
-    strategy:
-      type: Docker
-    output:
-      to:
-        kind: ImageStreamTag
-        name: 'openshift-elasticsearch:2.4.1'
+  - name: IMAGE_STREAM_NAMESPACE
+    description: "Namespace for where the imagestream for elasticsearch exists"
+    required: true
+    value: openshift
