@@ -1,4 +1,4 @@
-FROM elasticsearch:2.4.1
+FROM docker.elastic.co/elasticsearch/elasticsearch-oss:5.6.5
 
 MAINTAINER Vemund Gaukstad
 
