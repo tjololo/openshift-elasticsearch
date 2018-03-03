@@ -1,15 +1,11 @@
 cluster:
-  name: ${ELASTICSEARCH_CLUSTER_NAME}
+  name: ${ELASTICSEARCH_CLUSTER_NAME:default}
 
 network:
-  host: 0.0.0.0
+  host: _eth0:ipv4_
 
-discovery:
-  zen:
-    ping:
-      multicast:
-        enabled: false
+http:
+  port: 9200
 
 path:
-  data: /elasticsearch/persistent/${ELASTICSEARCH_CLUSTER_NAME}/data
-  work: /elasticsearch/${ELASTICSEARCH_CLUSTER_NAME}/work
+  data: /elasticsearch/persistent/${ELASTICSEARCH_CLUSTER_NAME:default}/data
