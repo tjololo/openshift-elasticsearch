@@ -21,7 +21,9 @@ RUN mkdir /elasticsearch && \
     mkdir /etc/elasticsearch && \
     chown -R elasticsearch:0 /elasticsearch && \
     cp /usr/share/elasticsearch/elasticsearch/config/log4j2.properties /etc/elasticsearch && \
-    chown -R elasticsearch:0 /etc/elasticsearch
+    chown -R elasticsearch:0 /etc/elasticsearch && \
+    chmod -R 775 /etc/elasticsearch && \
+    chmod -R 775 /usr/share/elasticsearch/
 
 USER elasticsearch
 ENV PATH=$PATH:/usr/share
