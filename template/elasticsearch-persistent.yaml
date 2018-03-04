@@ -117,7 +117,7 @@ items:
             resources:
               limits:
                 cpu: 293m
-                memory: 1024M
+                memory: 2024M
               requests:
                 cpu: 146m
                 memory: 512M
